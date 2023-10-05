@@ -24,7 +24,7 @@ public class MiniBank {
             System.out.println("You now have " + balence + " dollars");
         }
         else{
-            System.out.println("You dont have Access!");
+            System.out.println("You dont have Access today!");
         }
 
     }
