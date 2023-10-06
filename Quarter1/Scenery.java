@@ -18,6 +18,7 @@ public class Scenery extends JPanel {
 	Color colorRed = new Color(255,0,0);
 	Color colorWindow = new Color(184,134,11);
 	Color colorWindowBar = new Color(255,255,255);
+	Color colorBlack = new Color(0,0,0);
 	public Scenery() {
 		
 	}
@@ -113,12 +114,46 @@ public class Scenery extends JPanel {
 
 	}
 	private void drawFlowers(Graphics g,String aSeason) {
-		// need the graphics object to invoke the draw methods
+		int flowerX = 0;
+		int actualFlowerX;
+		int flowerWidth;
+		int cfr, cfg, cfb;
+		int flowerY;
+		int middleFlower;
+		while (flowerX < 800){
+			cfr = randomRGB();
+			cfg = randomRGB();
+			cfb = randomRGB();
+			Color colorFlower1 = new Color(cfr, cfg, cfb);
+			System.out.println("Step 1");
+			
+			System.out.println("Step 2");
+			
+			flowerY =  500+ randomnum(50, -10);
+			actualFlowerX  = flowerX + randomnum(10, -10);
+			flowerWidth =  10 + randomnum(10, 0);
+			middleFlower = flowerWidth / 2;
+			g.setColor(colorBlack);
+			g.fillRect(actualFlowerX + middleFlower,flowerY+5,4,20);
+			g.setColor(colorFlower1);
+			
+			g.fillOval(actualFlowerX,flowerY, 10 + randomnum(10, 0), 10 + randomnum(10, 0));
+			
+			
+			System.out.println("Step 3");
+			flowerX += 10 + (int)Math.floor(Math.random() * (50 - (-10) + 1) + (-10));
+		}
 	}
 	private void drawAnimal1(Graphics g) {
 		// need the graphics object to invoke the draw methods
 	}
 	private void drawAnimal2(Graphics g) {
 		// need the graphics object to invoke the draw methods
+	}
+	private int randomnum(int aMax, int aMin){
+		return (int)Math.floor(Math.random() * (aMax - aMin + 1) + aMin);
+	}
+	private int randomRGB(){
+		return randomnum(255,0);
 	}
 }
