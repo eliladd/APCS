@@ -35,9 +35,9 @@ public class Scenery extends JPanel {
 
 		// Create a method for each item that you draw
 		drawBackground(g, season, "Night");
-		drawTrees(g, season);
 		drawBuilding(g, season);
 		drawFlowers(g, season);
+		drawTrees(g, season);
 		drawAnimal1(g);
 		drawAnimal2(g);
 		
@@ -129,7 +129,7 @@ public class Scenery extends JPanel {
 			
 			System.out.println("Step 2");
 			
-			flowerY =  500+ randomnum(50, -10);
+			flowerY =  500+ randomnum(100, -100);
 			actualFlowerX  = flowerX + randomnum(10, -10);
 			flowerWidth =  10 + randomnum(10, 0);
 			middleFlower = flowerWidth / 2;
