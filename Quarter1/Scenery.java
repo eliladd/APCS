@@ -19,6 +19,9 @@ public class Scenery extends JPanel {
 	Color colorWindow = new Color(184,134,11);
 	Color colorWindowBar = new Color(255,255,255);
 	Color colorBlack = new Color(0,0,0);
+	int cloudX = 0;
+	int moonX = 0;
+	boolean right = true;
 	public Scenery() {
 		
 	}
@@ -54,7 +57,7 @@ public class Scenery extends JPanel {
 			g.setColor(sky);
 			g.fillOval(50, 50, 100, 100);
 			g.setColor(nightsky);
-			g.fillOval(80, 60, 80, 80);
+			g.fillOval(80+moonX, 60, 80, 80);
 		}
 		else{
 			//draw sun
@@ -85,8 +88,8 @@ public class Scenery extends JPanel {
 
 		//draw clouds
 		g.setColor(colorCloud);
-		g.fillOval(100,75,400,112);
-		g.fillOval(300,40,100,142);
+		g.fillOval(100+cloudX,75,400,112);
+		g.fillOval(300+cloudX,40,100,142);
 
 		
 	}
@@ -156,4 +159,51 @@ public class Scenery extends JPanel {
 	private int randomRGB(){
 		return randomnum(255,0);
 	}
+	public void moveClouds() {
+        /* if the rectangle is about to fall off the right side
+           of the screen, reset x to it's starting position. */
+        if (cloudX>800) {
+            cloudX = -500;
+        }
+        else {
+            cloudX++;   // Move the rectangle one to the right
+                     // Change how much you add to increase/decrease the speed
+        }
+    }
+	public void moveMoon() {
+        /* if the rectangle is about to fall off the right side
+           of the screen, reset x to it's starting position. */
+        if (right) {
+            moonX ++;
+			if (moonX > 80){
+				right = false;
+			}
+        }
+        else {
+            moonX--;   // Move the rectangle one to the right
+                     // Change how much you add to increase/decrease the speed
+			if (moonX < 0){
+				right = true;
+			}
+        }
+    }
+	public void animate(){
+        while(true){
+            //wait for .01 second
+            try {
+                Thread.sleep(10);
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+            
+            // You add code here. moveRectangle is called continously to simulate movement
+            moveClouds();
+			moveMoon();
+            
+            /* Repaint the graphics drawn. You MUST have this in your code
+              because each time an object is moved, the panel needs to 
+              be updated. */
+            repaint();
+        }
+    }
 }
