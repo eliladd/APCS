@@ -1,6 +1,7 @@
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.awt.Dimension;
 
 
@@ -23,16 +24,73 @@ public class Scenery extends JPanel {
 	int moonX = 0;
 	boolean right = true;
 	boolean groundDrawn = false;
+	ArrayList<ArrayList<Integer>> masterflowersList = new ArrayList<>();
+	ArrayList<Integer> stripperClipList = new ArrayList<>();
+	
 	public Scenery() {
-		
-	}
+		int numflowers = randomnum(100,50);
+		System.out.println("number of flowers: " + numflowers);
+		for (int i = 0; i <= numflowers; i++){
+			
+			
+			stripperClipList.clear();
+			stripperClipList.add(randomnum(0, 800)); //Adds X-Coords : Index is 0
+			//System.out.print("xvalue: " + stripperClipList.get(0));
+			stripperClipList.add(500 + randomnum(100, -100)); //Adds Y-Coords : Index is 1
+			//System.out.print("Yvalue: " + stripperClipList.get(1));
+			stripperClipList.add(10 + randomnum(10, 0)); // Adds width : Index is 2
+			//System.out.print("width: " + stripperClipList.get(2));
+			stripperClipList.add(10 + randomnum(10, 0)); // Adds height : Index is 3
+			//System.out.print("height: " + stripperClipList.get(3));
+			stripperClipList.add(randomRGB()); // Adds R Value : Index is 4
+			stripperClipList.add(randomRGB()); // Adds G Value : Index is 5
+			stripperClipList.add(randomRGB()); // Adds B Value : Index is 6
+			System.out.println();
+			masterflowersList.add(stripperClipList);
+			
+		}
+		System.out.println("the slzie of masterflower list is: "+ masterflowersList.size());
+		/*
+				**Assume this is Class-Wide***
+				masterflowersList {flower1[],flower2[]...} <-arraylist
 
+				
+				***Assume this code is for the constructor***
+				pick a random number(N) of flwoers to generate
+				for loop n times{
+					add new flowerI to masterflowerslist with values:
+						generate random x
+						generate random y
+						generate random size
+						generate random rgb value <- I need to check this
+				}
+
+				***Assume this code is for the method that draws all of the flowers***
+					
+				for each slot in masterflowersList:
+					set color black
+					draw rectangle with XY values with extra math and size from slot 2
+					set color from slot 3
+					draw oval with XY values and size from slot 2
+					
+
+
+
+				individualFlowerList <- An Int[] ArrayList
+				individualFlowerList {x-coord,y-coord,size,rValue,gValue,bValue}
+				Color.getColor(r,g,b);
+				g.setColor(Color.getColor(rValue,gValue,bValue))
+
+				IN DRAWFLOWERS:
+				create a loop that draws each flower in 'slot' N of the list, untill the list is empty/gone through.
+				
+		 */
+	}
 	@Override
 	public Dimension getPreferredSize() {
 		//Sets the size of the panel
 		return new Dimension(800,600);
 	}
-
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -44,11 +102,11 @@ public class Scenery extends JPanel {
 		drawTrees(g, season);
 		drawAnimal1(g);
 		drawAnimal2(g);
-		if(!groundDrawn){
-			drawGround(g, season);
-			drawFlowers(g, season);
-			groundDrawn = true;
-		}
+		
+		drawGround(g, season);
+		drawFlowers(g, season);
+		
+		
 		
 		
 
@@ -126,36 +184,29 @@ public class Scenery extends JPanel {
 
 	}
 	private void drawFlowers(Graphics g,String aSeason) {
-		int flowerX = 0;
-		int actualFlowerX;
-		int flowerWidth;
-		int cfr, cfg, cfb;
-		int flowerY;
-		int middleFlower;
-		while (flowerX < 800){
-			
-			cfr = randomRGB();
-			cfg = randomRGB();
-			cfb = randomRGB();
-			Color colorFlower1 = new Color(cfr, cfg, cfb);
-			System.out.println("Step 1");
-			
-			System.out.println("Step 2");
-			
-			flowerY =  500+ randomnum(100, -100);
-			actualFlowerX  = flowerX + randomnum(10, -10);
-			flowerWidth =  10 + randomnum(10, 0);
-			middleFlower = flowerWidth / 2;
+		
+		for (ArrayList<Integer> i: masterflowersList) { 
+			System.out.println(i);
 			g.setColor(colorBlack);
-			g.fillRect(actualFlowerX + middleFlower,flowerY+5,4,20);
-			g.setColor(colorFlower1);
-			
-			g.fillOval(actualFlowerX,flowerY, 10 + randomnum(10, 0), 10 + randomnum(10, 0));
-			
-			
-			System.out.println("Step 3");
-			flowerX += 10 + (int)Math.floor(Math.random() * (50 - (-10) + 1) + (-10));
+			g.fillRect(i.get(0) + ((i.get(0))/2),i.get(1) + ((i.get(1))/2),4,20 + ((i.get(1))/4));
+			Color flowerColor = new Color(i.get(4), i.get(5), i.get(6));
+			g.setColor(flowerColor);
+			g.fillOval(i.get(0), i.get(1), i.get(2), i.get(3));
+			System.out.println("I should have moved on by now.");
 		}
+		
+		
+		
+		/*
+		for (int i = 0; i < masterflowersList.size(); i++) { 
+			System.out.println(i);
+			g.setColor(colorBlack);
+			g.fillRect(masterflowersList.get(i.get(0)) + ((i.get(0))/2),i.get(1) + ((i.get(1))/2),4,20 + ((i.get(1))/4));
+			Color flowerColor = new Color(i.get(4), i.get(5), i.get(6));
+			g.setColor(flowerColor);
+			g.fillOval(i.get(0), i.get(1), i.get(2), i.get(3));
+		}
+		 */
 	}
 	private void drawAnimal1(Graphics g) {
 		// need the graphics object to invoke the draw methods
