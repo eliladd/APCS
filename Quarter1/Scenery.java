@@ -22,6 +22,7 @@ public class Scenery extends JPanel {
 	int cloudX = 0;
 	int moonX = 0;
 	boolean right = true;
+	boolean groundDrawn = false;
 	public Scenery() {
 		
 	}
@@ -39,21 +40,39 @@ public class Scenery extends JPanel {
 		// Create a method for each item that you draw
 		drawBackground(g, season, "Night");
 		drawBuilding(g, season);
-		drawFlowers(g, season);
+		
 		drawTrees(g, season);
 		drawAnimal1(g);
 		drawAnimal2(g);
+		if(!groundDrawn){
+			drawGround(g, season);
+			drawFlowers(g, season);
+			groundDrawn = true;
+		}
+		
 		
 
 	}
-	
+	private void drawGround(Graphics g,String aSeason){
+				//draw Ground
+		if (aSeason.equals("Spring")){
+			g.setColor(colorGreen);
+		}
+		if (aSeason.equals("Fall")){
+			g.setColor(colorBrown);
+		}
+		if (aSeason.equals("Winter")){
+			g.setColor(colorGrey);
+		}
+		g.fillRect(0,400,800,600);
+	}
 	private void drawBackground(Graphics g,String aSeason, String aTime) {
 
 		//draw sky
 		if (aTime.equals("Night")){
 			//draw moon
 			g.setColor(nightsky);
-			g.fillRect(0,0,800,600);
+			g.fillRect(0,0,800,300);
 			g.setColor(sky);
 			g.fillOval(50, 50, 100, 100);
 			g.setColor(nightsky);
@@ -65,17 +84,7 @@ public class Scenery extends JPanel {
 			g.fillRect(0,0,800,600);
 		}
 		
-		//draw Ground
-		if (aSeason.equals("Spring")){
-			g.setColor(colorGreen);
-		}
-		if (aSeason.equals("Fall")){
-			g.setColor(colorBrown);
-		}
-		if (aSeason.equals("Winter")){
-			g.setColor(colorGrey);
-		}
-		g.fillRect(0,400,800,600);
+
 		//draw sun or moon
 		if (aTime.equals("Night")){
 			//draw moon
@@ -124,6 +133,7 @@ public class Scenery extends JPanel {
 		int flowerY;
 		int middleFlower;
 		while (flowerX < 800){
+			
 			cfr = randomRGB();
 			cfg = randomRGB();
 			cfb = randomRGB();
