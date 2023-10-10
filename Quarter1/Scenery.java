@@ -25,7 +25,6 @@ public class Scenery extends JPanel {
 	boolean right = true;
 	boolean groundDrawn = false;
 	ArrayList<ArrayList<Integer>> masterflowersList = new ArrayList<>();
-	ArrayList<Integer> stripperClipList = new ArrayList<>();
 	
 	public Scenery() {
 		int numflowers = randomnum(100,50);
@@ -33,7 +32,7 @@ public class Scenery extends JPanel {
 		for (int i = 0; i <= numflowers; i++){
 			
 			
-			stripperClipList.clear();
+			ArrayList<Integer> stripperClipList = new ArrayList<>();
 			stripperClipList.add(randomnum(0, 800)); //Adds X-Coords : Index is 0
 			//System.out.print("xvalue: " + stripperClipList.get(0));
 			stripperClipList.add(500 + randomnum(100, -100)); //Adds Y-Coords : Index is 1
