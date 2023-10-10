@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.awt.Dimension;
 
-
 public class Scenery extends JPanel {
 	String time;
 	String season = "Spring";
@@ -20,6 +19,8 @@ public class Scenery extends JPanel {
 	Color colorWindow = new Color(184,134,11);
 	Color colorWindowBar = new Color(255,255,255);
 	Color colorBlack = new Color(0,0,0);
+	Color colorWhite = new Color(255,255,255);
+	Color colorOrenge = new Color(255, 165, 0);
 	int cloudX = 0;
 	int moonX = 0;
 	boolean right = true;
@@ -30,7 +31,6 @@ public class Scenery extends JPanel {
 		int numflowers = randomnum(100,50);
 		System.out.println("number of flowers: " + numflowers);
 		for (int i = 0; i <= numflowers; i++){
-			
 			
 			ArrayList<Integer> stripperClipList = new ArrayList<>();
 			stripperClipList.add(randomnum(0, 800)); //Adds X-Coords : Index is 0
@@ -48,7 +48,7 @@ public class Scenery extends JPanel {
 			masterflowersList.add(stripperClipList);
 			
 		}
-		System.out.println("the slzie of masterflower list is: "+ masterflowersList.size());
+		//System.out.println("the slzie of masterflower list is: "+ masterflowersList.size());
 		/*
 				**Assume this is Class-Wide***
 				masterflowersList {flower1[],flower2[]...} <-arraylist
@@ -71,9 +71,6 @@ public class Scenery extends JPanel {
 					draw rectangle with XY values with extra math and size from slot 2
 					set color from slot 3
 					draw oval with XY values and size from slot 2
-					
-
-
 
 				individualFlowerList <- An Int[] ArrayList
 				individualFlowerList {x-coord,y-coord,size,rValue,gValue,bValue}
@@ -82,7 +79,6 @@ public class Scenery extends JPanel {
 
 				IN DRAWFLOWERS:
 				create a loop that draws each flower in 'slot' N of the list, untill the list is empty/gone through.
-				
 		 */
 	}
 	@Override
@@ -95,7 +91,7 @@ public class Scenery extends JPanel {
 		super.paintComponent(g);
 
 		// Create a method for each item that you draw
-		drawBackground(g, season, "Night");
+		drawBackground(g, season, "Day");
 		drawBuilding(g, season);
 		
 		drawTrees(g, season);
@@ -104,11 +100,6 @@ public class Scenery extends JPanel {
 		
 		drawGround(g, season);
 		drawFlowers(g, season);
-		
-		
-		
-		
-
 	}
 	private void drawGround(Graphics g,String aSeason){
 				//draw Ground
@@ -129,7 +120,7 @@ public class Scenery extends JPanel {
 		if (aTime.equals("Night")){
 			//draw moon
 			g.setColor(nightsky);
-			g.fillRect(0,0,800,300);
+			g.fillRect(0,0,800,400);
 			g.setColor(sky);
 			g.fillOval(50, 50, 100, 100);
 			g.setColor(nightsky);
@@ -185,13 +176,13 @@ public class Scenery extends JPanel {
 	private void drawFlowers(Graphics g,String aSeason) {
 		
 		for (ArrayList<Integer> i: masterflowersList) { 
-			System.out.println(i);
+			//System.out.println(i);
 			g.setColor(colorBlack);
 			g.fillRect(i.get(0) + ((i.get(0))/2),i.get(1) + ((i.get(1))/2),4,20 + ((i.get(1))/4));
 			Color flowerColor = new Color(i.get(4), i.get(5), i.get(6));
 			g.setColor(flowerColor);
 			g.fillOval(i.get(0), i.get(1), i.get(2), i.get(3));
-			System.out.println("I should have moved on by now.");
+			//System.out.println("I should have moved on by now.");
 		}
 		
 		
@@ -208,7 +199,16 @@ public class Scenery extends JPanel {
 		 */
 	}
 	private void drawAnimal1(Graphics g) {
-		// need the graphics object to invoke the draw methods
+		// penguin
+		//body
+		g.setColor(colorBlack);
+		g.fillOval(650, 300, 75, 100);
+		g.setColor(colorWhite);
+		g.fillOval(660, 310, 55, 80);
+		g.setColor(colorOrenge);
+		g.fillOval(640, 400, 55, 20);
+		g.fillOval(640, 460, 55, 20);
+		
 	}
 	private void drawAnimal2(Graphics g) {
 		// need the graphics object to invoke the draw methods
