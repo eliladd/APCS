@@ -6,7 +6,7 @@ public class Runner {
         Scanner sc = new Scanner(System.in);
         // Create the frame object. Give it a title appropriate to the application
         JFrame frame = new JFrame("Scenery");
-        System.out.print("What season is it? (Winter, Fall, Summer)");
+        System.out.print("What season is it? (Winter, Fall, Spring)");
         String season = sc.nextLine();
         System.out.print("Is it Day or Night? ");
         String time = sc.nextLine();
