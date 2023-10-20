@@ -17,9 +17,15 @@ public class Animate extends JPanel {
     Color colorCloud = new Color(236, 240, 241, 64);
     Color colorFlower = new Color(42,51,174);
     Color colorStem = new Color(0,83,44);
+    Color colorFrog = new Color(88,188,8);
+    Color colorBlack = new Color(0,0,0);
+    Color colorRed = new Color(255,0,0);
     int cloudX = 0;
     int sunY = 0;
     int flowerX =0;
+    int frogX = 0;
+    int frogY = 0;
+    boolean up = true;
     
 
     // Constructor
@@ -43,6 +49,7 @@ public class Animate extends JPanel {
         drawCastle(g);
         drawClouds(g);
         drawFlowers(g);
+        drawFrog(g);
 	}
     
     /* This method runs in parallel with the other methods.
@@ -57,10 +64,10 @@ public class Animate extends JPanel {
             } catch(InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
-            
             // UPDADE GRAPHICS
             moveClouds();
             moveSun();
+            moveFrog();
             /* Repaint the graphics drawn. You MUST have this in your code
               because each time an object is moved, the panel needs to 
               be updated. */
@@ -72,15 +79,6 @@ public class Animate extends JPanel {
         g.fillRect(0,0,800,600);
         g.setColor(colorMoon);
         g.fillOval(100, 50+sunY, 150, 150);
-        /*
-        g.setColor(colorMoon2);
-        g.fillOval(120, 80, 20, 20);
-        g.fillOval(200, 70, 19, 19);
-        g.fillOval(130, 160, 19, 19);
-        g.fillOval(190, 120, 19, 19);
-        g.fillOval(170, 150, 19, 19);
-         */
-
     }
     public void drawGround(Graphics g){
         g.setColor(colorGround);
@@ -126,13 +124,48 @@ public class Animate extends JPanel {
     }
     public void drawFlowers(Graphics g){
         while (flowerX < 800){
+            System.out.println(flowerX);
             g.setColor(colorStem);
-            g.fillRect(75 + flowerX, 475, 20, 100);
+            g.fillRect(75 + flowerX, 475, 20, 10);
             g.setColor(colorFlower);
             g.fillOval(60 + flowerX,450,50,50);
+            System.out.println("I printed a flower!");
             flowerX += 40;
         }
-        
-        
+    }
+    public void drawFrog(Graphics g){
+        g.setColor(colorFrog);
+        g.fillOval(0+frogX,550+frogY,50,50);
+        g.fillOval(-20+frogX,570+frogY,30,30);
+        g.fillOval(40+frogX,570+frogY,30,30);
+        g.setColor(colorBlack);
+        g.fillOval(10+frogX,560+frogY,10,10);
+        g.fillOval(30+frogX,560+frogY,10,10);
+        g.setColor(colorRed);
+        g.fillOval(20+frogX,570+frogY,10,20);
+
+    }
+    public void moveFrog(){
+        //System.out.println(frogY);
+        if (frogX>800) {
+            frogX = -500;
+        }
+        else {
+            frogX++;   // Move the rectangle one to the right
+                     // Change how much you add to increase/decrease the speed
+        }
+        if (up){
+            frogY --;
+            if (frogY <= -50){
+                up = false;
+            }
+            
+        }
+        else{
+            frogY++;
+            if (frogY >= 0){
+                up = true;
+            }
+        }
     }
 }
