@@ -20,11 +20,18 @@ public class Animate extends JPanel {
     Color colorFrog = new Color(88,188,8);
     Color colorBlack = new Color(0,0,0);
     Color colorRed = new Color(255,0,0);
+    Color colorGrass = new Color(124, 252, 0);
+    Color colorTrunk = new Color(83,53,10);
+    //
     int cloudX = 0;
     int sunY = 0;
     int flowerX =0;
     int frogX = 0;
     int frogY = 0;
+    int grassX = 0;
+    int grassmoveX = 0;
+    int grassY = 0;
+    int treeX = 0;
     boolean up = true;
     
 
@@ -48,8 +55,11 @@ public class Animate extends JPanel {
         drawGround(g);
         drawCastle(g);
         drawClouds(g);
+         drawTrees(g);
         drawFlowers(g);
         drawFrog(g);
+        drawGrass(g);
+       
 	}
     
     /* This method runs in parallel with the other methods.
@@ -124,13 +134,49 @@ public class Animate extends JPanel {
     }
     public void drawFlowers(Graphics g){
         while (flowerX < 800){
-            System.out.println(flowerX);
+            
             g.setColor(colorStem);
-            g.fillRect(75 + flowerX, 475, 20, 10);
+            g.fillRect(15+flowerX, 475, 20, 90);
             g.setColor(colorFlower);
-            g.fillOval(60 + flowerX,450,50,50);
-            System.out.println("I printed a flower!");
-            flowerX += 40;
+            g.fillOval(flowerX,450,50,50);
+            
+            flowerX += 80;
+        }
+        if (flowerX <= 800){
+            
+            flowerX =0;
+        }
+    }
+    public void drawTrees(Graphics g){
+        while (treeX < 800){
+            
+            g.setColor(colorTrunk);
+            g.fillRect(40+treeX, 475, 20, 90);
+            g.setColor(colorFrog);
+            int[] xPoints = new int[]{0+treeX, 50+treeX, 100+treeX};
+            int[] yPoints = new int[]{490, 400, 490};
+
+            g.fillPolygon( xPoints, yPoints, 3);
+            
+            
+            treeX += 80;
+        }
+        if (treeX <= 800){
+            
+            treeX =0;
+        }
+    }
+    public void drawGrass(Graphics g){
+        while (grassX < 800){
+            
+            g.setColor(colorGrass);
+            g.drawLine(+grassX, 600, +grassX + randomnum(-10, 10), 550 + randomnum(-10, 10));
+            
+            
+            grassX += 1;
+        }
+        if (grassX <= 800){
+            grassX =0;
         }
     }
     public void drawFrog(Graphics g){
@@ -168,4 +214,7 @@ public class Animate extends JPanel {
             }
         }
     }
+    private int randomnum(int aMax, int aMin){
+		return (int)Math.floor(Math.random() * (aMax - aMin + 1) + aMin);
+	}
 }

@@ -4,7 +4,7 @@ public class Runner {
 	public static void main( String args[] ) {
         
         // Create the frame object. Give it a title appropriate to the application
-        JFrame frame = new JFrame("");
+        JFrame frame = new JFrame("Scene with animation. how long can this go? idk will it wrap or do a ... thing? lets find out!!aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!!!!");
 
         //Create the JPanel object and add it to the frame
          Animate canvas = new Animate();
