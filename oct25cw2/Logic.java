@@ -7,6 +7,7 @@ public class Logic {
         while (stoprun == false){
             int num1 = (int)(Math.random()*5+1);
             int num2 = (int)(Math.random()*5+1);
+            System.out.println("the numbers are " + num1 + " and " + num2);
             if (num1 == 5 && num2 ==5){
                 System.out.println("you win 10 points");
                 points += 10;
