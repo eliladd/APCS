@@ -82,12 +82,15 @@ public class Screen extends JPanel implements ActionListener{
             }
             else if (event.getSource() == onePointB){
                 bet = 1;
+                customer.roll(bet);
             }
             else if (event.getSource() == fivePointB){
                 bet = 5;
+                customer.roll(bet);
             }
             else if (event.getSource() == tenPointB){
                 bet = 10;
+                customer.roll(bet);
             }
 			//This line MUST be here refresh the screen
 			repaint();
