@@ -4,4 +4,11 @@ public class ForTest {
             System.out.println(i);
         }
     }
+    public int getFactorial(int aNum1){
+        int num = 1;
+        for (int i = aNum1; i>0; i--){
+            num *= i;
+        }
+        return num;
+    }
 }

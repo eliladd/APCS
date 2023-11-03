@@ -33,6 +33,8 @@ public class Screen extends JPanel implements ActionListener{
 	public Screen() {
         
         RollB = new JButton("ROLL!!");
+        RollB.setBackground(Color.RED);
+        RollB.setOpaque(true);
         onePointB = new JButton("1 Point");
         fivePointB = new JButton("5 Points");
         tenPointB = new JButton("10 Points");
@@ -68,8 +70,15 @@ public class Screen extends JPanel implements ActionListener{
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-
-        //g.drawString("points: " + customer.getBalance(), 50, 200);
+         if (customer.gotJack()){
+            g.setColor(Color.CYAN);
+            g.fillRect(0, 0, 1000, 1000);
+            g.setColor(Color.BLACK);
+        }
+        g.drawString("points: " + customer.getBalance(), 50, 200);
+        g.drawString("bet size: " + customer.getBetSize(), 50, 275);
+       
+        
         
 		
 	}
@@ -78,20 +87,26 @@ public class Screen extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent event) {
 			if (event.getSource() == RollB){
                 //DO RANDOM STUFF/PERFORM ROLL
-                
+                customer.roll();
+                //System.out.println("test");
+
             }
             else if (event.getSource() == onePointB){
-                bet = 1;
-                customer.roll(bet);
+                customer.setBet(1);
+                //customer.roll();
+                //System.out.println(bet);
             }
             else if (event.getSource() == fivePointB){
-                bet = 5;
-                customer.roll(bet);
+                customer.setBet(5);
+                //customer.roll();
+                //System.out.println(bet);
             }
             else if (event.getSource() == tenPointB){
-                bet = 10;
-                customer.roll(bet);
+                customer.setBet(10);
+                //customer.roll();
+                //System.out.println(bet);
             }
+            
 			//This line MUST be here refresh the screen
 			repaint();
 
