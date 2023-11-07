@@ -1,0 +1,5 @@
+//create a random number based on the max and min numbers
+private int rand(int aMax, int aMin){
+		return (int)Math.floor(Math.random() * (aMax - aMin + 1) + aMin);
+	}
+
