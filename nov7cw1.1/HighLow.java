@@ -23,10 +23,10 @@ public class HighLow {
                 }
             }
             else if (input.equals("h")){
-                max = guess;
+                max = guess-1;
             }
             else if (input.equals("l")){
-                min = guess;
+                min = guess+1;
             }
             else{
                 break;
@@ -35,4 +35,4 @@ public class HighLow {
 
         }
     }
-}
+} 
