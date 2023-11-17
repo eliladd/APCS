@@ -18,8 +18,10 @@ public class ForEach {
        return false;
     }
     public boolean search(int aString, int[] aArray){
+        //
         for(int  each  :  aArray){
-            if (aString == aArray[each]) {
+            //System.out.println(aArray[each]);
+            if (aString == each) {
                 return true;
             }
         }
