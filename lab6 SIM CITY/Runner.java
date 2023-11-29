@@ -1,4 +1,3 @@
-
 import javax.swing.JFrame;
 // Runner that can be used with JPanel Graphics
 public class Runner {

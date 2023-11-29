@@ -5,16 +5,16 @@ import java.awt.Graphics;
 public class RainDrop{
 	//location of the raid drop
 	private int x, y;
-	private Color blue; //color of the raindrop
+	private Color white; //color of the raindrop
 	
 	public RainDrop(int x, int y){
 		this.x = x;
 		this.y = y;
-		blue = new Color(0,0,255);
+		white = new Color(255,255,255);
 	}
 	//draw the raindrop
 	public void drawRainDrop(Graphics g) {
-		g.setColor(blue);
+		g.setColor(white);
 		g.fillOval(x, y, 3, 7);
 	}
 	//move the rain vertically
