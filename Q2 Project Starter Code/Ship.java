@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 public class Ship{
 	//location of ship
 	private int x, y;
-	private Color blue;
 	private Projectile pObj;
 	private BufferedImage spaceship;
 	private boolean fire;
@@ -17,7 +16,6 @@ public class Ship{
 		//set up instance variables
 		this.x = x;
 		this.y = y;
-		blue = new Color(0,0,255);
 		pObj = new Projectile(x,y);
 		fire = false;
 		try{
