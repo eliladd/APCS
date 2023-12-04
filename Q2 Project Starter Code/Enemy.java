@@ -7,7 +7,7 @@ public class Enemy {
 	private String direction;
 	private int speed;
 	private boolean visible;
-	public Enemy(int x, int y, int speed){
+	public Enemy(int x, int y, int speed, boolean visible){
 		//set up instance variables
 		this.x = x;
 		this.y = y;
@@ -16,7 +16,7 @@ public class Enemy {
 		height = 50;
 		blue = new Color(0,0,255);
 		direction = "left";
-		visible = true;
+		this.visible = visible;
 	}
 	//draw the ship
 	public void draw(Graphics g){
@@ -27,6 +27,12 @@ public class Enemy {
 	}
 	public int getX(){
 		return x;
+	}
+	public void setSpeed(int speed){
+		this.speed = speed;
+	}
+	public void setVisible(){
+		visible = true;
 	}
 	public void changeX(int x){
 		this.x = x;

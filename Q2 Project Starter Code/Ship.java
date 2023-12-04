@@ -34,13 +34,13 @@ public class Ship{
 
 	}
 	public void moveUp(){
-		y-=5;
+		y-=10;
 		if (!fire){
 			pObj.reset(x, y);
 		}
 	}
 	public void moveDown(){
-		y+=5;
+		y+=10;
 		if (!fire){
 			pObj.reset(x, y);
 		}
@@ -60,6 +60,9 @@ public class Ship{
 		}
 	}
 	// Check to see if the projectile has hit an enemy
+	public void setFire(boolean fire){
+		this.fire = fire;
+	}
 	public boolean checkProjectileCollision(Enemy e){
 		
 		if( e.getVisible() ){ //checkCollision only when the enemy is visible
@@ -79,12 +82,11 @@ public class Ship{
 				System.out.println("Collision"); // for testing 
 				e.dissapear();
 				pObj.reset(x,y);	
-				fire = false;
+				setFire(false);
 				return true;
 				
 			}
 		}
 		return false;
 	}
-
 }

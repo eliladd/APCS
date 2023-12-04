@@ -17,9 +17,13 @@ public class GamePanel extends JPanel implements KeyListener{
 	private Enemy[] enemy;
 	private Star[] star;
 	private Font font;
+	private Projectile projectile;
 	private Color textColor;
 	//keep track of enemies killed and level
-	private int level = 1, score = 0, lives = 3;
+	private int level = 1, score = 0, lives = 3, spawned = 0;
+	//keep track of int shots, int score, int collisions, int frames
+	private int shots, collisions, frames;
+	private boolean setvisible;
 	public GamePanel(){
 		score = 0;
 		textColor = new Color(255,255,153);
@@ -29,7 +33,7 @@ public class GamePanel extends JPanel implements KeyListener{
         setFocusable(true); 
 		//add key listeners
 		addKeyListener(this);
-		enemy = new Enemy[3];
+		enemy = new Enemy[5];
 		star = new Star[999];
 		//instanseate each Star
 		for(int i = 0; i<star.length; i++){
@@ -42,7 +46,15 @@ public class GamePanel extends JPanel implements KeyListener{
 		for(int i = 0; i<enemy.length; i++){
 			int x = 900;
 			int y = (int)Math.floor(Math.random() * (600 - 0 + 1) + 0);
-			enemy[i] = new Enemy(x,y, level);
+			if (spawned >=3){
+				setvisible = true;
+			}
+			else{
+				setvisible = false;
+				spawned++;
+			}
+			enemy[i] = new Enemy(x,y, level, setvisible);
+			spawned++;
 		}
 	}
 	
@@ -91,7 +103,21 @@ public class GamePanel extends JPanel implements KeyListener{
 			//space bar
 			System.out.println("fire");
 			ship.setfire();
+			shots++;
 		}
+		//click the o button to kill all ships and move to the next level
+		if (e.getKeyCode() == 79){
+			for(Enemy each : enemy){
+				each.dissapear();
+			}
+			if (score < 3){
+				score = 3;
+			}
+			else{
+				score = 8;
+			}
+		}
+		
 		
 		repaint();
 	}
@@ -110,6 +136,7 @@ public class GamePanel extends JPanel implements KeyListener{
 			} catch(InterruptedException ex) {
 			    Thread.currentThread().interrupt();
 			}
+			frames++;
 			//shoot the projectile
 			ship.moveProjectile(800);
 			//animate the rain
@@ -119,8 +146,10 @@ public class GamePanel extends JPanel implements KeyListener{
 			for(Enemy each : enemy){
 				each.move();
 				//reset enemy position if it goes out of bounds
-				if (each.getX()<-50){
-					System.out.println("enemy reset");
+				if (each.getX()<-50 && each.getVisible()){
+					//System.out.println("enemy reset");
+					//System.out.println(each.getX());
+					//System.out.println(each.getY());
 					lives--;
 					each.changeX(850);
 					each.changeY((int)Math.floor(Math.random() * (550 - 0 + 1) + 0));
@@ -128,23 +157,30 @@ public class GamePanel extends JPanel implements KeyListener{
 				}
 			}
 			//check for collisions
-			for(Enemy each : enemy){
-				if(ship.checkProjectileCollision(each)){
+			for (Enemy each : enemy) {
+				if (ship.checkProjectileCollision(each)) {
 					score++;
 				}
 			}
 			
 			
 			//check if all enemies are gone
-			if (score == 3){
-				level++;
-				for(int i = 0; i<enemy.length; i++){
-					int x = 900;
-					int y = (int)Math.floor(Math.random() * (600 - 0 + 1) + 0);
-					enemy[i] = new Enemy(x,y, level);
+			if (score == 3 && level == 1){
+				for(Enemy each : enemy){
+					each.setVisible();
+					each.changeX(900);
+					each.changeY((int)Math.floor(Math.random() * (600 - 0 + 1) + 0));
+					each.setSpeed(3);
 				}
-
+				level++;
 				
+			}
+			//check is score is 8 and level is 2 to go the end screen
+			if (score == 8 && level == 2){
+				//System.out.println("end screen");
+				EndScreen end = new EndScreen(shots, score, collisions, frames);
+				//end.setVisible(true);
+				break;
 			}
 			//repaint the graphics drawn
 			repaint();

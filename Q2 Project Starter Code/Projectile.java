@@ -8,6 +8,7 @@ public class Projectile {
     private int x, y;
     private int width, height;
     private Color red;
+    private Ship ship;
     // Constructor
     public Projectile(int x, int y) {
         this.x = x;
@@ -43,4 +44,30 @@ public class Projectile {
         this.x = x;
         this.y = y;
     }
+    public boolean checkProjectileCollision(Enemy e){
+		
+		if( e.getVisible() ){ //checkCollision only when the enemy is visible
+			//ship projectile
+			int pX = x;
+			int pY = y;
+			int pWidth = width;
+			int pHeight = height;
+			//enemy
+			int eX = e.getX();
+			int eY = e.getY();
+			int eWidth = e.getWidth();
+			int eHeight = e.getHight();
+			
+			if( pX+pWidth >= eX && pX <= eX + eWidth  &&  
+				pY+pHeight >= eY && pY <= eY + eHeight ) {
+				System.out.println("Collision"); // for testing 
+				e.dissapear();
+				reset(x,y);	
+				ship.setFire(false);
+				return true;
+				
+			}
+		}
+		return false;
+	}
 }
