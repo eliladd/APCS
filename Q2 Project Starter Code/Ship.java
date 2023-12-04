@@ -59,4 +59,32 @@ public class Ship{
 			}
 		}
 	}
+	// Check to see if the projectile has hit an enemy
+	public boolean checkProjectileCollision(Enemy e){
+		
+		if( e.getVisible() ){ //checkCollision only when the enemy is visible
+			//ship projectile
+			int pX = pObj.getX();
+			int pY = pObj.getY();
+			int pWidth = pObj.getWidth();
+			int pHeight = pObj.getHeight();
+			//enemy
+			int eX = e.getX();
+			int eY = e.getY();
+			int eWidth = e.getWidth();
+			int eHeight = e.getHight();
+			
+			if( pX+pWidth >= eX && pX <= eX + eWidth  &&  
+				pY+pHeight >= eY && pY <= eY + eHeight ) {
+				System.out.println("Collision"); // for testing 
+				e.dissapear();
+				pObj.reset(x,y);	
+				fire = false;
+				return true;
+				
+			}
+		}
+		return false;
+	}
+
 }

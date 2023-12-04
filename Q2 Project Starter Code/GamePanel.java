@@ -5,38 +5,44 @@ import java.awt.Dimension;
 
 // import KeyListener classes
 import java.awt.event.KeyListener;
-import java.io.IOException;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import javax.imageio.ImageIO;
+import java.awt.Font;
+
 
 
 public class GamePanel extends JPanel implements KeyListener{
 
 	//instance variables
 	private Ship ship;
-	private Star[] rain;
-	private BufferedImage spaceship;
+	private Enemy[] enemy;
+	private Star[] star;
+	private Font font;
+	private Color textColor;
+	//keep track of enemies killed and level
+	private int level = 1, score = 0, lives = 3;
 	public GamePanel(){
-		//Instantiate the image object in the constructor 
-		try{
-			spaceship = ImageIO.read(new File("Spaceship.png"));
-		}
-		catch(IOException  e){
-			System.out.println("error loading image");
-		}
+		score = 0;
+		textColor = new Color(255,255,153);
+		font = new Font("Arial", Font.PLAIN, 20);
 		//instanceate instance variables
 		ship = new Ship(50,300);
         setFocusable(true); 
 		//add key listeners
 		addKeyListener(this);
-		rain = new Star[999];
+		enemy = new Enemy[3];
+		star = new Star[999];
 		//instanseate each Star
-		for(int i = 0; i<rain.length; i++){
+		for(int i = 0; i<star.length; i++){
 			int x = (int)Math.floor(Math.random() * (800 - 0 + 1) + 0);
 			int y = (int)Math.floor(Math.random() * (600 - 0 + 1) + 0);
-			rain[i] = new Star(x,y);
+			int speed = (int)Math.floor(Math.random() * (2 - 0 + 1) + 0);
+			star[i] = new Star(x,y, speed);
+		}
+		//instanseate each Enemy
+		for(int i = 0; i<enemy.length; i++){
+			int x = 900;
+			int y = (int)Math.floor(Math.random() * (600 - 0 + 1) + 0);
+			enemy[i] = new Enemy(x,y, level);
 		}
 	}
 	
@@ -54,9 +60,15 @@ public class GamePanel extends JPanel implements KeyListener{
 		g.setColor(Color.BLACK);
 		g.fillRect(0,0,800,600);
 		//draw stars
-		for(Star each : rain){
+		for(Star each : star){
 			each.drawStar(g);
 		}
+		for(Enemy each : enemy){
+			each.draw(g);
+		}
+		g.setFont(font);
+		g.setColor(textColor);
+		g.drawString("score: " + score + "\t Lives: " + lives, 20, 30);
 		//draw ship
 		ship.draw(g);
 		
@@ -89,7 +101,6 @@ public class GamePanel extends JPanel implements KeyListener{
 	// part of an interface.
 	public void keyReleased(KeyEvent e){}
 	public void keyTyped(KeyEvent e){}
-	
 	public void animate(){
 		
 		while(true){
@@ -102,13 +113,40 @@ public class GamePanel extends JPanel implements KeyListener{
 			//shoot the projectile
 			ship.moveProjectile(800);
 			//animate the rain
-			for(Star each : rain){
+			for(Star each : star){
 				each.moveLeft();
 			}
+			for(Enemy each : enemy){
+				each.move();
+				//reset enemy position if it goes out of bounds
+				if (each.getX()<-50){
+					System.out.println("enemy reset");
+					lives--;
+					each.changeX(850);
+					each.changeY((int)Math.floor(Math.random() * (550 - 0 + 1) + 0));
+					
+				}
+			}
+			//check for collisions
+			for(Enemy each : enemy){
+				if(ship.checkProjectileCollision(each)){
+					score++;
+				}
+			}
+			
+			
+			//check if all enemies are gone
+			if (score == 3){
+				level++;
+				for(int i = 0; i<enemy.length; i++){
+					int x = 900;
+					int y = (int)Math.floor(Math.random() * (600 - 0 + 1) + 0);
+					enemy[i] = new Enemy(x,y, level);
+				}
+
+				
+			}
 			//repaint the graphics drawn
-			repaint();
-		
-			//repaint the graphics
 			repaint();
 		}
 
