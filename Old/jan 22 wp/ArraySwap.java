@@ -4,7 +4,7 @@ public class ArraySwap {
         nums = new int[10];
 
         for(int i = 0; i < nums.length; i++) {
-            nums[i] = (int)(Math.random() * 100);
+            nums[i] = (int)(Math.random() * 99 + 1);
         }
     }
     public void print() {

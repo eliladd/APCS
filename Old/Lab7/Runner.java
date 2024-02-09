@@ -1,5 +1,5 @@
 import javax.swing.JFrame;
-
+import contactlist.*;
 public class Runner { 
 
 	public static void main(String[] args){
