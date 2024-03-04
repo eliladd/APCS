@@ -21,10 +21,11 @@ public class Table extends JPanel implements ActionListener {
 
     JButton hit, stand, playAgain;
 
-    int red = 0, green = 0, blue = 0, total;
+    int red = 0, green = 0, blue = 0, total, dealerTotal;
 	//create a color
 	Color background = new Color(red, green, blue);
     Font font = new Font("Bauhaus 93", Font.PLAIN, 20);
+    private boolean clickable = true, ended = false, playerwin = false, dealerwin = false, tie = false;
 
     private String[] suits = {"Heart", "Diamond", "Club", "Spade"};
     private String[] name = {"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"};
@@ -42,15 +43,7 @@ public class Table extends JPanel implements ActionListener {
             }
         }
         //shuffle the deck arraylist
-        for (int i = 0; i < deck.size(); i++){
-            int r = (int)(Math.random() * deck.size());
-            Card temp = deck.get(i);
-            deck.set(i, deck.get(r));
-            deck.set(r, temp);
-        }
-
-
-        //shuffle
+        shuffle();
 
         //deal cards to the player
         playerCards.add(deck.get(0));
@@ -116,7 +109,7 @@ public class Table extends JPanel implements ActionListener {
 		//getWidth() and getHeight() are Dimension methods
 		
         //draw current cards in hand
-        int xIncriment = 0, yIncriment = 275;
+        int yIncriment = 275;
         for (int i = 0; i < playerCards.size(); i++){
             g.setColor(Color.white);
             g.fillRect(50 + 100 * i, 50+yIncriment, 100, 150);
@@ -126,16 +119,10 @@ public class Table extends JPanel implements ActionListener {
             g.drawString("\n of \n", 60 + 100 * i, 110+yIncriment);
             g.drawString(playerCards.get(i).getSuit(), 60 + 100 * i, 140+yIncriment);
         }
-        //draw the hidden card in dealers hand
-        g.setColor(Color.white);
-        g.fillRect(100, 50, 100, 150);
-        g.setColor(Color.black);
-        g.drawRect(100, 50, 100, 150);
-        g.drawString("card", 110, 80);
-        g.drawString("", 110, 110);
-        g.drawString("hidden", 110, 140);
+        
+        
         //draw cards in dealers hand
-        for (int i = 1; i < dealerCards.size(); i++){
+        for (int i = 0; i < dealerCards.size(); i++){
             g.setColor(Color.white);
             g.fillRect(110 + 100 * i, 50, 100, 150);
             g.setColor(Color.black);
@@ -144,38 +131,158 @@ public class Table extends JPanel implements ActionListener {
             g.drawString("\n of \n", 120 + 100 * i, 110);
             g.drawString(dealerCards.get(i).getSuit(), 120 + 100 * i, 140);
         }
+        if(total > 21){
+            ended = true;
+        }
+        if(!ended){
+            //draw the hidden card in dealers hand
+            g.setColor(Color.white);
+            g.fillRect(110, 50, 100, 150);
+            g.setColor(Color.black);
+            g.drawRect(110, 50, 100, 150);
+            g.drawString("card", 120, 80);
+            g.drawString("", 120, 110);
+            g.drawString("hidden", 120, 140);
+        }
         g.setColor(Color.white);
         g.fillRect(200, 250, 120, 50);
         g.setColor(Color.black);
         g.drawRect(200, 250, 120, 50);
         //calcualte total
         total = 0;
+        dealerTotal = 0;
         for (int i = 0; i < playerCards.size(); i++){
             total += playerCards.get(i).getRank();
         }
-        int v = 30;
-        g.drawString("Total: " + total, 205, 280);
+        for (int i = 0; i < dealerCards.size(); i++){
+            dealerTotal += dealerCards.get(i).getRank();
+        }
+        //System.out.println("total = " + total);
+        //System.out.println("ended = " + ended);
+        if(!ended){
+            int changeddealTotoal = dealerTotal-dealerCards.get(0).getRank();
+            g.drawString("Dealer Total: " + changeddealTotoal, 205, 250);
+            g.drawString("Player Total: " + total, 205, 280);
+        }
+        else{
+            g.drawString("Dealer Total: " + dealerTotal, 205, 250);
+            g.drawString("Player Total: " + total, 205, 280);
+        }
+        
+        if(total > 21){
+            ended = true;
+        }
+        //reset deck if empty
+        if(deck.size() == 0){
+            deck = new ArrayList<Card>();
+            //create Deck
+            for(int i = 0; i < name.length;i++){
+                for (int j = 0; j < suits.length; j++){
+                    deck.add(new Card(suits[j], name[i], rank[i])); 
+                }
+            }
+            //shuffle the deck arraylist
+            shuffle();
+            System.out.println();
+        }
+        //draw win lose tie screens
+        if (playerwin == true){
+            System.out.println();
+        }
 	}
+
 	
 
 
 	public void shuffle(){
 		//write code to shuffle your deck
+        for (int i = 0; i < deck.size(); i++){
+            int r = (int)(Math.random() * deck.size());
+            Card temp = deck.get(i);
+            deck.set(i, deck.get(r));
+            deck.set(r, temp);
+        }
 	}
+
+    public void dealerPlays(){
+        ended = true;
+        System.out.println("dealer playing");
+        System.out.println("deck length: " + deck.size());
+        while(dealerTotal < 17){
+            dealerCards.add(deck.get(0));
+            deck.remove(0);
+            repaint();
+            for (int i = 0; i < dealerCards.size(); i++){
+                dealerTotal += dealerCards.get(i).getRank();
+            }
+        }
+        end();
+    }
+
+    public void end(){
+        System.out.println("ending");
+        if(dealerTotal > 21){
+            System.out.println("player wins");
+            playerwin = true;
+            clickable = false;
+        }
+        else if(dealerTotal > total){
+            System.out.println("dealer wins");
+            dealerwin = true;
+            clickable = false;
+        }
+        else if(dealerTotal == total){
+            System.out.println("player ties with dealer");
+            tie = true;
+            clickable = false;
+        }
+        else{
+            playerwin = true;
+            clickable = false;
+        }
+    }
+
 
 	public void actionPerformed(ActionEvent e) {
         if(e.getSource() == hit){
-            if ( total >= 21){
-                System.out.println(total);
+            if (clickable){
+                if ( total >= 21){
+                    System.out.println(total);
+                }
+                else{
+                    playerCards.add(deck.get(0));
+                    deck.remove(0);
+                }
             }
-            else{
-                playerCards.add(deck.get(0));
-                deck.remove(0);
+            if(total > 21){
+                ended = true;
             }
-            
         }
         if(e.getSource() == stand){
             //write code to end the player's turn
+            if (clickable){
+                System.out.println("stand!");
+                dealerPlays();
+            }
+        }
+        //write code to play again
+        if(e.getSource() == playAgain){
+            //reset game
+            playerCards = new ArrayList<Card>();
+            dealerCards = new ArrayList<Card>();
+            playerCards.add(deck.get(0));
+            deck.remove(0);
+            playerCards.add(deck.get(0));
+            deck.remove(0);
+            dealerCards.add(deck.get(0));
+            deck.remove(0);
+            dealerCards.add(deck.get(0));
+            deck.remove(0);
+            clickable = true;
+            ended = false;
+            playerwin = false;
+            dealerwin = false;
+            tie = false;
         }
         repaint();
 	}
