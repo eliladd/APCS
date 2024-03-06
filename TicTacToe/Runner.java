@@ -1,10 +1,20 @@
 import java.util.Scanner;
+
+import javax.swing.JFrame;
 public class Runner {
     public static void main(String[] args){
+        JFrame frame = new JFrame("tictactoe");
         Game game = new Game();
+        Screen screen = new Screen();
+        frame.add(screen);
         boolean play = true;
         int winner = 0;
         Scanner sc = new Scanner(System.in);
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+        /*
         while(play){
             game.printTable();
             System.out.print("Enter row:");
@@ -27,6 +37,7 @@ public class Runner {
             }
             
         }
+         */
         
     }
 }
