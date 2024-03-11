@@ -21,11 +21,11 @@ public class Table extends JPanel implements ActionListener {
 
     JButton hit, stand, playAgain;
 
-    int red = 0, green = 0, blue = 0, total, dealerTotal;
+    int red = 0, green = 0, blue = 0, total, dealerTotal, animatevar = 0, animatephase = 0, increaseSize = 0;
 	//create a color
 	Color background = new Color(red, green, blue);
     Font font = new Font("Bauhaus 93", Font.PLAIN, 20);
-    private boolean clickable = true, ended = false, playerwin = false, dealerwin = false, tie = false;
+    private boolean clickable = true, ended = false, playerwin = false, dealerwin = false, tie = false, animationPlays = false;
 
     private String[] suits = {"Heart", "Diamond", "Club", "Spade"};
     private String[] name = {"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"};
@@ -106,18 +106,40 @@ public class Table extends JPanel implements ActionListener {
 		green = 0;
 		blue = 0;
 		background = new Color(red, green, blue);
-		//getWidth() and getHeight() are Dimension methods
-		
+
+		//draw card deck
+        g.setColor(Color.black);
+        g.fillRect(30, 325, 100, 150);
+        g.setColor(Color.white);
+        g.drawRect(30, 325, 100, 150);
+
+        if(animatephase == 2 || animatephase == 3){
+            g.setColor(Color.white);
+            g.fillRect(30+animatevar+increaseSize, 325, 100-animatevar, 150);
+            g.setColor(Color.black);
+            g.drawRect(30+animatevar+increaseSize, 325, 99-animatevar, 151);
+           
+        }else{
+            g.setColor(Color.black);
+            g.fillRect(30+animatevar, 325, 100-animatevar, 150);
+            g.setColor(Color.white);
+            g.drawRect(30+animatevar, 325, 100-animatevar, 150);
+        }
+        
+        g.drawString("Deck", 40, 180+175);
+        g.drawString("", 40, 210+175);
+        g.drawString("Card", 40, 240+175);
+         
         //draw current cards in hand
-        int yIncriment = 275;
+        int yIncriment = 275, xIncriment = 100;;
         for (int i = 0; i < playerCards.size(); i++){
             g.setColor(Color.white);
-            g.fillRect(50 + 100 * i, 50+yIncriment, 100, 150);
+            g.fillRect(xIncriment+50 + 100 * i, 50+yIncriment, 100, 150);
             g.setColor(Color.black);
-            g.drawRect(50 + 100 * i, 50+yIncriment, 100, 150);
-            g.drawString(playerCards.get(i).getName(), 60 + 100 * i, 80+yIncriment);
-            g.drawString("\n of \n", 60 + 100 * i, 110+yIncriment);
-            g.drawString(playerCards.get(i).getSuit(), 60 + 100 * i, 140+yIncriment);
+            g.drawRect(xIncriment+50 + 100 * i, 50+yIncriment, 100, 150);
+            g.drawString(playerCards.get(i).getName(), xIncriment+60 + 100 * i, 80+yIncriment);
+            g.drawString("\n of \n",xIncriment+ 60 + 100 * i, 110+yIncriment);
+            g.drawString(playerCards.get(i).getSuit(),xIncriment+ 60 + 100 * i, 140+yIncriment);
         }
         
         
@@ -136,6 +158,7 @@ public class Table extends JPanel implements ActionListener {
         }
         if(!ended){
             //draw the hidden card in dealers hand
+            
             g.setColor(Color.white);
             g.fillRect(110, 50, 100, 150);
             g.setColor(Color.black);
@@ -145,9 +168,9 @@ public class Table extends JPanel implements ActionListener {
             g.drawString("hidden", 120, 140);
         }
         g.setColor(Color.white);
-        g.fillRect(200, 250, 120, 50);
+        g.fillRect(200, 220, 160, 75);
         g.setColor(Color.black);
-        g.drawRect(200, 250, 120, 50);
+        g.drawRect(200, 220, 160, 75);
         //calcualte total
         total = 0;
         dealerTotal = 0;
@@ -157,8 +180,6 @@ public class Table extends JPanel implements ActionListener {
         for (int i = 0; i < dealerCards.size(); i++){
             dealerTotal += dealerCards.get(i).getRank();
         }
-        //System.out.println("total = " + total);
-        //System.out.println("ended = " + ended);
         if(!ended){
             int changeddealTotoal = dealerTotal-dealerCards.get(0).getRank();
             g.drawString("Dealer Total: " + changeddealTotoal, 205, 250);
@@ -189,7 +210,7 @@ public class Table extends JPanel implements ActionListener {
         if (playerwin == true){
             System.out.println();
         }
-	}
+    }
 
 	
 
@@ -247,11 +268,13 @@ public class Table extends JPanel implements ActionListener {
         if(e.getSource() == hit){
             if (clickable){
                 if ( total >= 21){
-                    System.out.println(total);
+                    
                 }
                 else{
-                    playerCards.add(deck.get(0));
-                    deck.remove(0);
+                    clickable = false;
+                    animationPlays = true;
+                    animatephase = 1;
+                    
                 }
             }
             if(total > 21){
@@ -286,5 +309,44 @@ public class Table extends JPanel implements ActionListener {
         }
         repaint();
 	}
+    
+    public void animate(){
+        //System.out.println("animate");
+        while(true){
+            //wait for .01 second
+            try {
+                Thread.sleep(10);
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+            
+            //animate the draw card
+            if(animationPlays){
+                if (animatephase == 1){
+                    animatevar += 5;
+                    if (animatevar > 200){
+                        animatephase = 2;
+                        
+                    }
+                }
+                if (animatephase == 2){
+                    animatevar += 5;
+                    
+                    if (animatevar > 100){
+                        animatephase = 0;
+                        
+                        clickable = true;
+                        animationPlays = false;
+                        animatevar = 0;
+                        playerCards.add(0,deck.get(0));
+                    deck.remove(0);
+                    }
+                }
+            }
+            repaint();
+        }
+        
+    }
+    
 
 }
