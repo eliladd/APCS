@@ -3,7 +3,7 @@ public class Runner
 {
 	public static void main(String args[])
 	{
-		Table game = new Table();
+		Screen game = new Screen();
 		JFrame frame = new JFrame("Pixel Art");
 		
 		frame.add(game);
@@ -11,6 +11,6 @@ public class Runner
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
-		game.animate();
+		
 	}
 }
