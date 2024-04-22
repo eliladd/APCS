@@ -1,0 +1,26 @@
+public void run2(int x) {
+        if( x > 0 ){
+            public void run2(int x) {
+                if( x > 0 ){
+                    public void run2(int x) {
+                        if( x > 0 ){
+                            public void run2(int x) {
+                                if( x > 0 ){
+                                    public void run2(int x) {
+                                        if( x > 0 ){
+                                            run2(x-1);
+                                            System.out.println(x);
+                                        }
+                                }
+                                    System.out.println(x);
+                                }
+                        }
+                            System.out.println(x);
+                        }
+                }
+                    System.out.println(x);
+                }
+        }
+            System.out.println(x);
+        }
+}
