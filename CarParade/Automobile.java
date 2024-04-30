@@ -1,6 +1,6 @@
 import java.awt.Graphics;
 import java.awt.Color;
-
+//test
 abstract public class Automobile{
 
 	private Color bodyColor;
