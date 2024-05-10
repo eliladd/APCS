@@ -14,9 +14,9 @@ public class ClubMembers
 	*/
 	public void addMembers(String[] names, int gradYear)
 	{ /* to be implemented in part (a) */ 
-		for((String name : names){
-            memberList.add(new MemberInfo(name, gradYear, true));
-        }
+		for(int i=0; i<names.length; i++){
+			memberList.add(new MemberInfo(names[i], gradYear, true));
+		}
 	}
 	
 	
@@ -25,7 +25,16 @@ public class ClubMembers
 	*/
 	public ArrayList<MemberInfo> removeMembers(int year)
 	{ /* to be implemented in part (b) */ 
-		
+		ArrayList<MemberInfo> graduatedMembers = new ArrayList<MemberInfo>();
+		for(int i=0; i<memberList.size(); i++){
+			if(memberList.get(i).getGradYear() <= year){
+				if(memberList.get(i).inGoodStanding()){
+					graduatedMembers.add(memberList.get(i));
+					memberList.remove(i);
+				}
+			}
+		}
+		return graduatedMembers;
 	}
 	
 	// There may be instance variables, constructors, and methods that are not shown.
