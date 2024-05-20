@@ -34,6 +34,16 @@ public class Logic {
                 break;
             case 1:
                 //setup for player one
+                g.setColor(Color.gray);
+                g.fillRect(200, 200, 1520, 680);
+                g.setColor(Color.white);
+                g.drawString("it is now time for player one setup. make sure player 2 is not looking, \n then place your peice by selecting the ship with the button, \n then clicking on the orentation button, then the location on the screen!", 400, 300);
+                g.setColor(Color.darkGray);
+                for (int x = 0; x < 10; x+=1) {
+                    for (int y = 0; y <10; y+=1) {
+                        g.fillOval(250+ x*62,250 + y*62, 20, 20);
+                    }
+                }
                 break;
             case 2:
                 //setup for player two
