@@ -2,9 +2,11 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Dimension;
+// import KeyListener classes
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
 
-
-public class Panel extends JPanel {
+public class Panel extends JPanel implements KeyListener{
 	
     // Instance variables here
     int moveSea = 0;
@@ -12,9 +14,13 @@ public class Panel extends JPanel {
     Color sky = new Color(135, 205, 225);
     Color sea = Color.BLUE;
     Color darkGrey = new Color(169, 169, 169);
+
+    Logic logic = new Logic();
     // Constructor
 	public Panel() {
-		
+		setFocusable(true); 
+		// add Key listener
+		addKeyListener(this);
 	}
 
     // You do not have to change this.
@@ -33,7 +39,7 @@ public class Panel extends JPanel {
 		// Call your drawing methods from here. 
 		// You need to pass 'g'
 		drawBackground(g);
-        drawBoard(g);
+        logic.draw(g);
 
 
 	}
@@ -56,31 +62,7 @@ public class Panel extends JPanel {
         }
 
 	}
-    private void drawBoard(Graphics g) {
-        //draw the board
-        g.setColor(Color.gray);
-        g.fillRect(200, 200, 1520, 680);
-        //draw the grid
-        g.setColor(Color.darkGray);
-        //draw the player ship board
-        for (int x = 0; x < 10; x+=1) {
-            for (int y = 0; y <10; y+=1) {
-                g.fillOval(250+ x*62,250 + y*62, 20, 20);
-            }
-        }
-        //draw the enemy ship board
-        for (int x = 0; x < 10; x+=1) {
-            for (int y = 0; y <10; y+=1) {
-                g.fillOval(1050+ x*62,250 + y*62, 20, 20);
-            }
-        }
-        //write the player and enemy labels
-        //set size of text
-        g.setFont(g.getFont().deriveFont(30.0f));
-        g.setColor(Color.white);
-        g.drawString("your ships", 250, 200);
-        g.drawString("your intel", 1050, 200);
-    }
+    
     public void animate(){
         while(true){
             //wait for .01 second
@@ -109,4 +91,23 @@ public class Panel extends JPanel {
             repaint();
         }
     }
+    public void keyPressed(KeyEvent e){
+		// testing
+		System.out.println(e.getKeyCode());
+
+		//interpret key clicks
+		if (e.getKeyCode() == 32){   // up arrow
+			if(logic.getPhase() == 0){
+                logic.setPhase(1);
+            }
+		}
+		
+		
+	}
+
+
+	// You must have method signatures for all methods that are
+	// part of an interface.
+	public void keyReleased(KeyEvent e){}
+	public void keyTyped(KeyEvent e){}
 }
