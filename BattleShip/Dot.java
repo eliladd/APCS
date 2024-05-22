@@ -8,17 +8,15 @@ public class Dot {
     {
         this.x = x+20;
         this.y = y+20;
-        this.red = red;
-        this.green = green;
-        this.blue = blue;
+        this.red = 10;
+        this.green = 10;
+        this.blue = 10;
         this.size = size;
     }
     public void drawMe(Graphics g)
     {
         g.setColor(new Color(red, green, blue));
-        g.fillRect(x, y, size, size);
-        g.setColor(Color.BLACK);
-        g.drawRect(x, y, size, size);
+        g.fillOval(x, y, 20,20);
     }
     public void changeColor(int red, int green, int blue)
     {

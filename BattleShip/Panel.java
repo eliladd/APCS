@@ -25,6 +25,7 @@ public class Panel extends JPanel implements KeyListener, MouseListener, ActionL
     Logic logic = new Logic();
     // Constructor
 	public Panel() {
+        addMouseListener(this);
 		setFocusable(true); 
         carrier = new JButton("Carrier");
         battleship = new JButton("Battleship");
@@ -149,7 +150,7 @@ public class Panel extends JPanel implements KeyListener, MouseListener, ActionL
     }
     public void keyPressed(KeyEvent e){
 		// testing
-		System.out.println(e.getKeyCode());
+		//System.out.println(e.getKeyCode());
 
 		//interpret key clicks
 		if (e.getKeyCode() == 32){   // up arrow
@@ -167,15 +168,24 @@ public class Panel extends JPanel implements KeyListener, MouseListener, ActionL
 	public void keyReleased(KeyEvent e){}
 	public void keyTyped(KeyEvent e){}
     public void mouseClicked(java.awt.event.MouseEvent e){
+        //System.out.println("Mouse clicked");
+    }
+    public void mouseEntered(java.awt.event.MouseEvent e){
+        //.out.println("Mouse entered");
+    }
+    public void mouseExited(java.awt.event.MouseEvent e){
+        //System.out.println("Mouse exited");
+    }
+    public void mousePressed(java.awt.event.MouseEvent e){
+        System.out.println("Mouse clicked");
         logic.click(e.getX(), e.getY());
     }
-    public void mouseEntered(java.awt.event.MouseEvent e){}
-    public void mouseExited(java.awt.event.MouseEvent e){}
-    public void mousePressed(java.awt.event.MouseEvent e){}
-    public void mouseReleased(java.awt.event.MouseEvent e){}
+    public void mouseReleased(java.awt.event.MouseEvent e){
+        //System.out.println("Mouse released");
+    }
 
     public void actionPerformed(ActionEvent event) {
-		
+		//System.out.println("action performed");
 	
 		repaint();
 

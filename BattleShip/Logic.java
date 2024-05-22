@@ -23,7 +23,7 @@ public class Logic  extends JPanel{
         dotList = new Dot[10][10];
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
-                dotList[i][j] = new Dot((i*20)-12, (j*20)-12, 255, 255, 255, 20);
+                dotList[i][j] = new Dot((i*60)+230, (j*60)+230, 255, 255, 255, 20);
             }
         }
 
@@ -54,9 +54,9 @@ public class Logic  extends JPanel{
                 g.drawString("then place your peice by selecting the ship with the button", 900, 320);
                 g.drawString("then clicking on the orentation button, then the location on the screen!", 900, 340);
                 g.setColor(Color.darkGray);
-                for (int x = 0; x < 10; x +=1) {
-                    for (int y = 0; y <10; y +=1) {
-                        g.fillOval(250+ x*62,250 + y*62, 20, 20);
+                for(int i = 0; i < dotList.length; i++){
+                    for(int j = 0; j < dotList[i].length; j++){
+                        dotList[i][j].drawMe(g);
                     }
                 }
                 //draw buttons for placing ships
@@ -86,6 +86,7 @@ public class Logic  extends JPanel{
         }
     }
     public void click(int x, int y){
+        System.out.println("click at " + x + " " + y + "case: "+phase);
         switch (phase) {
             case 0:
                 
@@ -95,7 +96,7 @@ public class Logic  extends JPanel{
                 for(int i = 0; i < dotList.length; i++){
                     for(int j = 0; j < dotList[i].length; j++){
                         if(x > dotList[i][j].getX() && x < dotList[i][j].getX() + dotList[i][j].getSize() && y > dotList[i][j].getY() && y < dotList[i][j].getY() + dotList[i][j].getSize()){
-                            dotList[i][j].changeColor(10,10,10);
+                            dotList[i][j].changeColor(100,100,100);
                             System.out.println("Square " + i + " " + j + " changed color to " + 10 + " " + 10 + " " + 10);
                         }
                     }
