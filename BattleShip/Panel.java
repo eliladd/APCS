@@ -186,7 +186,24 @@ public class Panel extends JPanel implements KeyListener, MouseListener, ActionL
 
     public void actionPerformed(ActionEvent event) {
 		//System.out.println("action performed");
-	
+        if (event.getSource() == carrier) {
+            logic.selectPlaceCarrier();
+        }
+        if (event.getSource() == battleship) {
+            logic.selectPlaceBattleship();
+        }
+        if (event.getSource() == cruiser) {
+            logic.selectPlaceCruiser();
+        }
+        if (event.getSource() == submarine) {
+            logic.selectPlaceSubmarine();
+        }
+        if (event.getSource() == destroyer) {
+            logic.selectPlaceDestroyer();
+        }
+        if(event.getSource() == rotate){
+            logic.rotate();
+        }
 		repaint();
 
 	}

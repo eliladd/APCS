@@ -11,8 +11,8 @@ import java.awt.event.ActionListener;
 public class Logic  extends JPanel{
     private Player pOne; // Declare pOne outside of the constructor
     private Player pTwo; // Declare pTwo outside of the constructor
-    int turn, phase;
-    boolean gameOver = false;
+    int turn, phase, selector = -20, selectShip;
+    boolean gameOver = false, rotatePeice = false;
     private Dot[][] dotList;
     
 
@@ -56,9 +56,10 @@ public class Logic  extends JPanel{
                 g.setColor(Color.darkGray);
                 for(int i = 0; i < dotList.length; i++){
                     for(int j = 0; j < dotList[i].length; j++){
-                        dotList[i][j].drawMe(g);
+                        //dotList[i][j].drawMe(g);
                     }
                 }
+                pOne.drawBoard(g);
                 //draw buttons for placing ships
                 carrier.setVisible(true);
                 battleship.setVisible(true);
@@ -69,6 +70,12 @@ public class Logic  extends JPanel{
                 place.setVisible(true);
                 placex.setVisible(true);
                 placey.setVisible(true);
+                //draw a red dot that is to the right of the buttons
+                g.setColor(Color.red);
+                g.fillOval(80, 80 + selector, 20, 20);
+                if(rotatePeice == true){
+
+                }
                 break;
             case 2:
                 //setup for player two
@@ -85,6 +92,34 @@ public class Logic  extends JPanel{
                 break;
         }
     }
+    public void rotate(){
+        if(rotatePeice == true){
+            rotatePeice = false;
+        }
+        else{
+            rotatePeice = true;
+        }
+    }
+    public void selectPlaceCarrier(){
+        selectShip = 1;
+        selector = 30;
+    }
+    public void selectPlaceBattleship(){
+        selectShip = 2;
+        selector = 130;
+    }
+    public void selectPlaceCruiser(){
+        selectShip = 3;
+        selector = 230;
+    }
+    public void selectPlaceSubmarine(){
+        selectShip = 4;
+        selector = 330;
+    }
+    public void selectPlaceDestroyer(){
+        selectShip = 5;
+        selector = 430;
+    }
     public void click(int x, int y){
         System.out.println("click at " + x + " " + y + "case: "+phase);
         switch (phase) {
@@ -98,6 +133,7 @@ public class Logic  extends JPanel{
                         if(x > dotList[i][j].getX() && x < dotList[i][j].getX() + dotList[i][j].getSize() && y > dotList[i][j].getY() && y < dotList[i][j].getY() + dotList[i][j].getSize()){
                             dotList[i][j].changeColor(100,100,100);
                             System.out.println("Square " + i + " " + j + " changed color to " + 10 + " " + 10 + " " + 10);
+                            pOne.placeShip(new Ship(i, j, selectShip, rotatePeice)); 
                         }
                     }
                 }
